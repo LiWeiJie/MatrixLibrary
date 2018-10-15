@@ -7,7 +7,7 @@
 #ifndef _MATRIX_AFFINE_TRANSFORM_H_
 #define _MATRIX_AFFINE_TRANSFORM_H_
 
-#include "matrix/matrix_gf2.h"
+#include "matrixlib/matrix_gf2.h"
 
 typedef struct AffineTransform {
     MatGf2 linear_map;

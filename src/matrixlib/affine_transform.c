@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-07-30 21:41:31
  */
 
-#include "matrix/affine_transform.h"
+#include "matrixlib/affine_transform.h"
 
 
 int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {

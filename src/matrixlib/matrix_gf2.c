@@ -4,7 +4,7 @@
  * @Last Modified by: Weijie Li
  * @Last Modified time: 2018-07-30 21:41:59
  */
-#include "matrix/matrix_gf2.h"
+#include "matrixlib/matrix_gf2.h"
 
 #include <stdio.h>
 

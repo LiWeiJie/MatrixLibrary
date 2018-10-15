@@ -1,0 +1,13 @@
+#ifndef _GLOBAL_CONFIG
+#define _GLOBAL_CONFIG
+
+// Optional Modules
+
+#cmakedefine iOS_M4RI
+#cmakedefine macOS_M4RI
+#cmakedefine ANDROID_M4RI
+
+#cmakedefine ANDROID_VER
+#cmakedefine ANDROID_MK_VER
+
+#endif
