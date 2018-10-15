@@ -1,8 +1,15 @@
 #ifndef M4RI_M4RI_CONFIG_H
 #define M4RI_M4RI_CONFIG_H
 
-#ifndef ANDROID_MK_VER
-#include "ml_config.h"
+
+#ifdef __ANDROID__
+	#define ANDROID_M4RI
+#elif defined(__iOS__)
+	#define iOS_M4RI
+#elif defined(__macOS__)
+	#define macOS_M4RI
+#elif defined(_WIN32)
+	#define win32_M4RI
 #endif
 
 #ifdef ANDROID_M4RI

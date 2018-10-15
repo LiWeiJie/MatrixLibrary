@@ -1,17 +1,59 @@
 ﻿# 0. Options for Compiler
 option(DEBUG "debug" OFF)
 option(ML_TEST "test" ON)
+option(BUILD_TARGET "target platform" OFF)
 
 if (CMAKE_HOST_WIN32)
     set(WINDOWS 1)
-    set(build_os WINDOWS)
+    set(build_os win32)
 elseif(CMAKE_HOST_APPLE)
     set(MACOS 1)
     set(build_os macOS)
+    SET(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 elseif(CMAKE_HOST_UNIX)
     set(LINUX 1)
     set(build_os linux)
 endif()
+
+IF(BUILD_TARGET)
+    message("\nBuild: ${BUILD_TARGET}")
+ELSE()
+    SET(BUILD_TARGET ${build_os})
+    message("\nBuild: ${BUILD_TARGET}")
+    
+ENDIF()
+
+IF(BUILD_TARGET STREQUAL macOS)
+    add_definitions(-D__macOS__)
+ENDIF()
+
+IF(BUILD_TARGET STREQUAL win32)
+    add_definitions(-D_WIN32)
+ENDIF()
+
+IF(BUILD_TARGET STREQUAL iOS)
+    add_definitions(-D__iOS__)
+
+    SET(CMD "xcrun -sdk iphoneos --show-sdk-path")
+    EXEC_PROGRAM(${CMD} OUTPUT_VARIABLE iOS_SDK_PATH)
+    SET(CMD "xcrun -sdk iphoneos --find clang")
+    EXEC_PROGRAM(${CMD} OUTPUT_VARIABLE CLANG_PATH)
+    set(CMAKE_C_COMPILER ${CLANG_PATH})
+    #-F${iOS_SDK_PATH}/System/Library/Frameworks
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os -isysroot ${iOS_SDK_PATH} -Wunused-command-line-argument -arch arm64 -arch armv7 -miphoneos-version-min=8.0 -fembed-bitcode")
+    message("CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}")
+    message("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
+ENDIF()
+
+IF(BUILD_TARGET STREQUAL Android)
+    add_definitions(-D__ANDROID__)
+
+    message(FATAL_ERROR
+    "Finished to generate <ml_config.h>! \n"
+    "If you want to compile, please run 'ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./Application.mk'."
+    )
+ENDIF()
+
 
 # 1. Set cmake version
 cmake_minimum_required(VERSION 3.2)
@@ -37,22 +79,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-IF(BUILD_TARGET)
-  message("\nBuild: ${BUILD_TARGET}")
-ENDIF()
-
 # iOS Setting
-IF(BUILD_TARGET STREQUAL iOS)
-    SET(CMD "xcrun -sdk iphoneos --show-sdk-path")
-    EXEC_PROGRAM(${CMD} OUTPUT_VARIABLE iOS_SDK_PATH)
-    SET(CMD "xcrun -sdk iphoneos --find clang")
-    EXEC_PROGRAM(${CMD} OUTPUT_VARIABLE CLANG_PATH)
-    set(CMAKE_C_COMPILER ${CLANG_PATH})
-    #-F${iOS_SDK_PATH}/System/Library/Frameworks
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Os -isysroot ${iOS_SDK_PATH} -Wunused-command-line-argument -arch arm64 -arch armv7 -miphoneos-version-min=8.0 -fembed-bitcode")
-    message("CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}")
-    message("CMAKE_C_FLAGS: ${CMAKE_C_FLAGS}")
-ENDIF()
+
 
 # ------------------
 # Compiler Environment Configure
@@ -111,15 +139,9 @@ endif(MSVC)
 message("Compiler Module Configure:")
 
 # 5. Generate config file
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ml_config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/ml_config.h @ONLY)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/ml_config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/include/ml_config.h @ONLY)
 
-#
-IF(BUILD_TARGET STREQUAL Android)
-  message(FATAL_ERROR
-  "Finished to generate <ml_config.h>! \n"
-  "If you want to compile, please run 'ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./Application.mk'."
-  )
-ENDIF()
+
 
 ########################## var info ##########################
 
