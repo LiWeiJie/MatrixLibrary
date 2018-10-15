@@ -1,5 +1,5 @@
-#ifndef _GLOBAL_CONFIG
-#define _GLOBAL_CONFIG
+#ifndef _ML_CONFIG
+#define _ML_CONFIG
 
 // Optional Modules
 

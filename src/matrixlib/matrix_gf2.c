@@ -297,7 +297,7 @@ void MatGf2Free(MatGf2 mat) {
 }
 
 
-
+// left multi, mat * data
 uint8_t ApplyMatToU8(const MatGf2 mat, uint8_t data) {
 	MatGf2 a = GenMatGf2(8,1);
 	InitVecFromBit(data, a);
@@ -311,6 +311,25 @@ uint32_t ApplyMatToU32(const MatGf2 mat, uint32_t data) {
 	MatGf2 a = GenMatGf2(32,1);
 	InitVecFromBit(data, a);
 	MatGf2Mul(mat, a, &a);
+	uint32_t result = (uint32_t)getDigitalFromVec(a);
+	MatGf2Free(a);
+	return result;
+}
+
+// left multi, mat * data
+uint8_t ApplyMatToU8(uint8_t data, const MatGf2 mat) {
+	MatGf2 a = GenMatGf2(8,1);
+	InitVecFromBit(data, a);
+	MatGf2Mul(a, mat, &a);
+	uint8_t result = (uint8_t)getDigitalFromVec(a);
+	MatGf2Free(a);
+	return result;
+}
+
+uint32_t ApplyMatToU32(uint32_t data, const MatGf2 mat) {
+	MatGf2 a = GenMatGf2(32,1);
+	InitVecFromBit(data, a);
+	MatGf2Mul(a, mat, &a);
 	uint32_t result = (uint32_t)getDigitalFromVec(a);
 	MatGf2Free(a);
 	return result;
