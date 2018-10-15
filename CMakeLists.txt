@@ -1,6 +1,6 @@
 ﻿# 0. Options for Compiler
 option(DEBUG "debug" OFF)
-option(ML_TEST "test" OFF)
+option(ML_TEST "test" ON)
 
 if (CMAKE_HOST_WIN32)
     set(WINDOWS 1)
@@ -8,7 +8,6 @@ if (CMAKE_HOST_WIN32)
 elseif(CMAKE_HOST_APPLE)
     set(MACOS 1)
     set(build_os macOS)
-    # SET(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 elseif(CMAKE_HOST_UNIX)
     set(LINUX 1)
     set(build_os linux)
@@ -122,14 +121,6 @@ IF(BUILD_TARGET STREQUAL Android)
   )
 ENDIF()
 
-# test
-IF(ML_TEST)
-    message("${PROJECT_NAME} ML_TEST ON")
-    add_subdirectory(test)
-ELSE(ML_TEST)
-    message("${PROJECT_NAME} ML_TEST OFF")
-ENDIF(ML_TEST)
-
 ########################## var info ##########################
 
 
@@ -151,6 +142,8 @@ AUX_SOURCE_DIRECTORY(src/m4ri M4RI_SRC)
 AUX_SOURCE_DIRECTORY(src/Matrixlib ML_SRCS)
 
 SET(LIB_SRCS  ${ML_SRCS} ${M4RI_SRC})
+
+
 
 ##########################  static lib ##########################
 
@@ -176,6 +169,22 @@ IF(LINK_LIBS)
 ENDIF(LINK_LIBS)
 
 
+########################## test ##########################
+# test
+IF(ML_TEST)
+    message("${PROJECT_NAME} ML_TEST ON")
+    SET(ML_TEST_SRC test/test.c test/math_test.c)
+
+    SET(ML_TEST_NAME ML_TEST_NAME)
+
+    ADD_EXECUTABLE(${ML_TEST_NAME} ${ML_TEST_SRC})
+    TARGET_LINK_LIBRARIES(${ML_TEST_NAME} ${BUILD_SHARED_NAME} ${LINK_LIBS})
+
+ELSE(ML_TEST)
+    message("${PROJECT_NAME} ML_TEST OFF")
+ENDIF(ML_TEST)
+
+
 ########################## install info  ##########################
 
 
@@ -191,4 +200,5 @@ install(TARGETS ${BUILD_SHARED_NAME}
 install(TARGETS ${BUILD_STATIC_NAME}
     DESTINATION lib
     PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+
 
