@@ -210,7 +210,7 @@ ENDIF(ML_TEST)
 ########################## install info  ##########################
 
 
-install(DIRECTORY include DESTINATION include/ 
+install(DIRECTORY include DESTINATION ./ 
         PATTERN "CMakeLists.txt" EXCLUDE
         PATTERN ".gitignore" EXCLUDE)
 
