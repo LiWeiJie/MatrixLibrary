@@ -156,8 +156,11 @@ int MatGf2Diag(const MatGf2 a, const MatGf2 b, MatGf2 *dst);
 void MatGf2Free(MatGf2 mat);
 
 
-uint8_t ApplyMatToU8(const MatGf2 mat, uint8_t data);
-uint32_t ApplyMatToU32(const MatGf2 mat, uint32_t data);
+uint8_t MatMulU8(const MatGf2 mat, uint8_t data);
+uint32_t MatMulU32(const MatGf2 mat, uint32_t data);
+
+uint8_t U8MulMat(uint8_t data, const MatGf2 mat);
+uint32_t U32MulMat(uint32_t data, const MatGf2 mat);
 
 /**
  * Return -1,0,1 if if A < B, A == B or A > B respectively.
