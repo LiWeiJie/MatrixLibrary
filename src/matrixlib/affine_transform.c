@@ -36,7 +36,16 @@ int GenIndAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim)
     return 0;
 }
 
+// left mul mat * at.linear_map
+int ApplyAffineTransformRight(const MatGf2 mat, const AffineTransform at, MatGf2* dst) {
+    // MatGf2 to_be_free = *dst;
+    MatGf2Mul(mat, at.linear_map, dst);
+    MatGf2Add(at.vector_translation, *dst, dst);
+    // MatGf2Free(to_be_free);
+    return 0;
+}
 
+// left mul at.linear_map * mat
 int ApplyAffineTransform(const AffineTransform at, const MatGf2 mat, MatGf2* dst) {
     // MatGf2 to_be_free = *dst;
     MatGf2Mul(at.linear_map, mat, dst);

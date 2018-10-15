@@ -18,7 +18,11 @@ int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int d
 
 int GenIndAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim);
 
+// left mul at.linear_map * mat
 int ApplyAffineTransform(const AffineTransform at, const MatGf2 mat, MatGf2* dst);
+
+// right mul mat * at.linear_map
+int ApplyAffineTransformRight(const MatGf2 mat, const AffineTransform at, MatGf2* dst);
 
 uint32_t ApplyAffineToU32(const AffineTransform aff, uint32_t x);
 
