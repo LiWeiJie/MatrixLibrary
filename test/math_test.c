@@ -354,7 +354,7 @@ int math_test() {
     printf("vector xor: %u\n", get32FromVec(v_result));
 
     printf("------------------------------\n");
-    printf("left mul test:\n");
+    printf("left mul matrix test:\n");
     ReAllocatedRandomMatGf2(8, 8, &v_a);
 
     uint8_t u8a = 123;
@@ -365,8 +365,22 @@ int math_test() {
     u8a = U8MulMat(u8a, v_a);
     u8b = U8MulMat(u8b, v_a);
     printf("u8a: %u, u8b: %u, xor: %u:%u\n", u8a, u8b, u8a^u8b, u8c);
+
+    printf("------------------------------\n");
+    printf("left mul affine test:\n");
+
+    uint32_t u32a = 0x11553;
+    uint32_t u32b = 0xabf32;
+    printf("u32a: %u, u32b: %u, xor: %u\n", u32a, u32b, u32a^u32b);
+
+    uint32_t u32c = U32MulAffine(u32a^u32b, at);
+    u32a = U32MulAffine(u32a, at);
+    u32b = U32MulAffine(u32b, at);
+    uint32_t af_v = get32FromVec(at.vector_translation);
+    printf("u32a: %u, u32b: %u, xor: %u:%u\n", u32a, u32b, u32a^u32b^af_v, u32c);
     
     
+
 
     return 0;
 }
