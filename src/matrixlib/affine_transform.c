@@ -54,26 +54,28 @@ int ApplyAffineTransform(const AffineTransform at, const MatGf2 mat, MatGf2* dst
     return 0;
 }
 
-uint32_t ApplyAffineToU32(const AffineTransform aff, uint32_t x) {
+//  affine.linear * u16 + affine.vector
+uint32_t ApplyAffineToU32(const AffineTransform aff, uint32_t data) {
     MatGf2 mat_x = NULL;
     ReAllocatedMatGf2(32, 1, &mat_x);
-    InitVecFromBit(x, mat_x);
+    InitVecFromBit(data, mat_x);
     MatGf2Add( MatGf2Mul(aff.linear_map, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint32_t result = get32FromVec(mat_x);
     MatGf2Free(mat_x);
     return result;
 }
 
-uint16_t ApplyAffineToU16(const AffineTransform aff, uint16_t x) {
+uint16_t ApplyAffineToU16(const AffineTransform aff, uint16_t data) {
     MatGf2 mat_x = NULL;
     ReAllocatedMatGf2(16, 1, &mat_x);
-    InitVecFromBit(x, mat_x);
+    InitVecFromBit(data, mat_x);
     MatGf2Add( MatGf2Mul(aff.linear_map, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint16_t result =  (uint16_t)getDigitalFromVec(mat_x);
     MatGf2Free(mat_x);
     return result;
 }
 
+//  affine.linear * u8 + affine.vector
 uint8_t ApplyAffineToU8(const AffineTransform aff, uint8_t data) {
     MatGf2 mat_x = NULL;
     ReAllocatedMatGf2(8, 1, &mat_x);
@@ -83,6 +85,39 @@ uint8_t ApplyAffineToU8(const AffineTransform aff, uint8_t data) {
     MatGf2Free(mat_x);
     return result;
 }
+
+// u32 * affine.linear + affine.vector
+uint32_t U32MulAffine(uint32_t data, const AffineTransform aff) {
+    MatGf2 mat_x = NULL;
+    ReAllocatedMatGf2(32, 1, &mat_x);
+    InitVecFromBit(data, mat_x);
+    MatGf2Add( MatGf2Mul(mat_x, aff.linear_map, &mat_x), aff.vector_translation, &mat_x);
+    uint32_t result = get32FromVec(mat_x);
+    MatGf2Free(mat_x);
+    return result;
+}
+
+uint16_t U16MulAffine(uint16_t data, const AffineTransform aff) {
+    MatGf2 mat_x = NULL;
+    ReAllocatedMatGf2(16, 1, &mat_x);
+    InitVecFromBit(data, mat_x);
+    MatGf2Add( MatGf2Mul(mat_x, aff.linear_map, &mat_x), aff.vector_translation, &mat_x);
+    uint16_t result =  (uint16_t)getDigitalFromVec(mat_x);
+    MatGf2Free(mat_x);
+    return result;
+}
+
+// u8 * affine.linear + affine.vector
+uint8_t U8MulAffine(uint8_t data, const AffineTransform aff) {
+    MatGf2 mat_x = NULL;
+    ReAllocatedMatGf2(8, 1, &mat_x);
+	InitVecFromBit(data, mat_x);
+    MatGf2Add( MatGf2Mul(mat_x, aff.linear_map, &mat_x), aff.vector_translation, &mat_x);
+    uint8_t result = (uint8_t)getDigitalFromVec(mat_x);
+    MatGf2Free(mat_x);
+    return result;
+}
+
 
 int AffineTransformFree(AffineTransform *aff) {
     MatGf2Free(aff->linear_map);
