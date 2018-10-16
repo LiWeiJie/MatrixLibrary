@@ -353,10 +353,20 @@ int math_test() {
     MatGf2Mul(v_show , (v_result), &v_result);
     printf("vector xor: %u\n", get32FromVec(v_result));
 
+    printf("------------------------------\n");
+    printf("left mul test:\n");
+    ReAllocatedRandomMatGf2(8, 8, &v_a);
 
+    uint8_t u8a = 123;
+    uint8_t u8b = 43;
+    printf("u8a: %u, u8b: %u, xor: %u\n", u8a, u8b, u8a^u8b);
+
+    uint8_t u8c = U8MulMat(u8a^u8b, v_a);
+    u8a = U8MulMat(u8a, v_a);
+    u8b = U8MulMat(u8b, v_a);
+    printf("u8a: %u, u8b: %u, xor: %u:%u\n", u8a, u8b, u8a^u8b, u8c);
     
-
-
+    
 
     return 0;
 }
