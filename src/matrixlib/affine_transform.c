@@ -62,6 +62,7 @@ uint32_t ApplyAffineToU32(const AffineTransform aff, uint32_t data) {
     MatGf2Add( MatGf2Mul(aff.linear_map, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint32_t result = get32FromVec(mat_x);
     MatGf2Free(mat_x);
+    mat_x = NULL;
     return result;
 }
 
@@ -72,6 +73,7 @@ uint16_t ApplyAffineToU16(const AffineTransform aff, uint16_t data) {
     MatGf2Add( MatGf2Mul(aff.linear_map, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint16_t result =  (uint16_t)getDigitalFromVec(mat_x);
     MatGf2Free(mat_x);
+    mat_x = NULL;
     return result;
 }
 
@@ -83,6 +85,7 @@ uint8_t ApplyAffineToU8(const AffineTransform aff, uint8_t data) {
     MatGf2Add( MatGf2Mul(aff.linear_map, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint8_t result = (uint8_t)getDigitalFromVec(mat_x);
     MatGf2Free(mat_x);
+    mat_x = NULL;
     return result;
 }
 
@@ -98,6 +101,9 @@ uint32_t U32MulAffine(uint32_t data, const AffineTransform aff) {
     MatGf2Add( MatGf2Mul(mat_y, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint32_t result = get32FromVec(mat_x);
     MatGf2Free(mat_x);
+    mat_x = NULL;
+    MatGf2Free(mat_y);
+    mat_y = NULL;
     return result;
 }
 
@@ -112,6 +118,9 @@ uint16_t U16MulAffine(uint16_t data, const AffineTransform aff) {
     MatGf2Add( MatGf2Mul(mat_y, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint16_t result =  (uint16_t)getDigitalFromVec(mat_x);
     MatGf2Free(mat_x);
+    mat_x = NULL;
+    MatGf2Free(mat_y);
+    mat_y = NULL;
     return result;
 }
 
@@ -127,16 +136,22 @@ uint8_t U8MulAffine(uint8_t data, const AffineTransform aff) {
     MatGf2Add( MatGf2Mul(mat_y, mat_x, &mat_x), aff.vector_translation, &mat_x);
     uint8_t result = (uint8_t)getDigitalFromVec(mat_x);
     MatGf2Free(mat_x);
+    mat_x = NULL;
+    MatGf2Free(mat_y);
+    mat_y = NULL;
     return result;
 }
 
-
-int AffineTransformFree(AffineTransform *aff) {
+int AffineTransformRelease(AffineTransform *aff) {
     MatGf2Free(aff->linear_map);
     aff->linear_map = NULL;
     MatGf2Free(aff->vector_translation);
     aff->vector_translation = NULL;
     return 0;
+}
+
+int AffineTransformFree(AffineTransform *aff) {
+    return AffineTransformRelease(aff);
 }
 
 uint8_t * ExportAffineToStr(const AffineTransform* aff) {

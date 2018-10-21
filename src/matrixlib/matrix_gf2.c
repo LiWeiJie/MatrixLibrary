@@ -304,6 +304,7 @@ uint8_t MatMulU8(const MatGf2 mat, uint8_t data) {
 	MatGf2Mul(mat, a, &a);
 	uint8_t result = (uint8_t)getDigitalFromVec(a);
 	MatGf2Free(a);
+	a = NULL;
 	return result;
 }
 
@@ -313,6 +314,7 @@ uint32_t MatMulU32(const MatGf2 mat, uint32_t data) {
 	MatGf2Mul(mat, a, &a);
 	uint32_t result = (uint32_t)getDigitalFromVec(a);
 	MatGf2Free(a);
+	a = NULL;
 	return result;
 }
 
@@ -325,6 +327,7 @@ uint8_t U8MulMat(uint8_t data, const MatGf2 mat) {
 	MatGf2Transpose(a, &a);
 	uint8_t result = (uint8_t)getDigitalFromVec(a);
 	MatGf2Free(a);
+	a = NULL;
 	return result;
 }
 
@@ -336,6 +339,7 @@ uint32_t U32MulMat(uint32_t data, const MatGf2 mat) {
 	MatGf2Transpose(a, &a);
 	uint32_t result = (uint32_t)getDigitalFromVec(a);
 	MatGf2Free(a);
+	a = NULL;
 	return result;
 }
 
