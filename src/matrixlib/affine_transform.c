@@ -9,11 +9,20 @@
 
 
 int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {
-    at->linear_map = GenMatGf2(dim, dim);
-    at->vector_translation = GenMatGf2(dim, 1);
-
-    at_inv->linear_map = GenMatGf2(dim, dim);
-    at_inv->vector_translation = GenMatGf2(dim, 1);
+    if (at==NULL)
+        return 0;
+    if (at->linear_map==NULL) {
+        at->linear_map = GenMatGf2(dim, dim);
+    } else {
+        assert(at->linear_map->nrows == dim);
+        assert(at->linear_map->ncols == dim);
+    }
+    if (at->vector_translation==NULL) {
+        at->vector_translation = GenMatGf2(dim, 1);
+    } else {
+        assert(at->vector_translation->nrows == dim);
+        assert(at->vector_translation->ncols == 1);
+    }
 
     RandomMatGf2(at->linear_map);
     while (IsMatGf2Invertible(at->linear_map)==0) {
@@ -21,9 +30,23 @@ int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int d
     }    
     RandomMatGf2(at->vector_translation);
 
-    MatGf2Inv(at->linear_map, &(at_inv->linear_map));
-    MatGf2Mul(at_inv->linear_map, at->vector_translation, &(at_inv->vector_translation));
-
+    if (at_inv != NULL) {
+        if (at_inv->linear_map==NULL) {
+            at_inv->linear_map = GenMatGf2(dim, dim);
+        } else {
+            assert(at_inv->linear_map->nrows == dim);
+            assert(at_inv->linear_map->ncols == dim);
+        }
+        if (at_inv->vector_translation==NULL) {
+            at_inv->vector_translation = GenMatGf2(dim, 1);
+        } else {
+            assert(at_inv->vector_translation->nrows == dim);
+            assert(at_inv->vector_translation->ncols == 1);
+        }
+        MatGf2Inv(at->linear_map, &(at_inv->linear_map));
+        MatGf2Mul(at_inv->linear_map, at->vector_translation, &(at_inv->vector_translation));
+    }
+    
     return 0;
 }
 

@@ -1,8 +1,8 @@
 #
-# MatrixLibrary.main.mk
+# MatrixLibrary.mk
 # For Android MatrixLibrary Library
 #
-# Only compile MatrixLibrary (Base modules, except SM4 White box)
+# Only compile MatrixLibrary (Base modules)
 #
 # ONLY SUPPORT 32bits OS
 #
@@ -13,7 +13,7 @@ APP_BUILD_SCRIPT := MatrixLibrary.mk
 NDK_APP_DST_DIR := ./android-lib/$(TARGET_ARCH_ABI)
 
 # Target filename
-LOCAL_MODULE := MatrixLibrary-lib
+LOCAL_MODULE := MatrixLib
 APP_ABI := armeabi-v7a x86
 # NOT SUPPORT armeabi
 # PARTICULAR SUPPORT x64
