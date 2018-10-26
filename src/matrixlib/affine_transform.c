@@ -8,9 +8,9 @@
 #include "matrixlib/affine_transform.h"
 
 
-int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {
+int RandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {
     if (at==NULL)
-        return 0;
+        return -1;
     if (at->linear_map==NULL) {
         at->linear_map = GenMatGf2(dim, dim);
     } else {
@@ -23,7 +23,6 @@ int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int d
         assert(at->vector_translation->nrows == dim);
         assert(at->vector_translation->ncols == 1);
     }
-
     RandomMatGf2(at->linear_map);
     while (IsMatGf2Invertible(at->linear_map)==0) {
         RandomMatGf2(at->linear_map);
@@ -50,13 +49,61 @@ int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int d
     return 0;
 }
 
-int GenIndAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {
-    at->linear_map = GenIndMatrix(dim);
-    at->vector_translation = GenMatGf2(dim, 1);
+int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {
+    if (at!=NULL) {
+        at->linear_map = at->vector_translation = NULL;
+    }
+    if (at_inv != NULL) {
+        at_inv->linear_map = at_inv->vector_translation = NULL;
+    }
+    int ret = 0;
+    ret = RandomAffineTransform(at, at_inv, dim);
+    return ret;
+}
 
-    at_inv->linear_map = GenIndMatrix(dim);
-    at_inv->vector_translation = GenMatGf2(dim, 1);
+int IndAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {
+    if (at==NULL)
+        return -1;
+
+    if (at->linear_map==NULL) {
+        at->linear_map = GenIndMatrix(dim);
+    } else {
+        assert(at->linear_map->nrows == dim);
+        assert(at->linear_map->ncols == dim);
+    }
+    if (at->vector_translation==NULL) {
+        at->vector_translation = GenMatGf2(dim, 1);
+    } else {
+        assert(at->vector_translation->nrows == dim);
+        assert(at->vector_translation->ncols == 1);
+    }
+
+    if (at_inv->linear_map==NULL) {
+        at_inv->linear_map = GenIndMatrix(dim);
+    } else {
+        assert(at_inv->linear_map->nrows == dim);
+        assert(at_inv->linear_map->ncols == dim);
+    }
+    if (at_inv->vector_translation==NULL) {
+        at_inv->vector_translation = GenMatGf2(dim, 1);
+    } else {
+        assert(at_inv->vector_translation->nrows == dim);
+        assert(at_inv->vector_translation->ncols == 1);
+    }
+
     return 0;
+}
+
+int GenIndAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim) {
+    if (at!=NULL) {
+        at->linear_map = at->vector_translation = NULL;
+    }
+    if (at_inv != NULL) {
+        at_inv->linear_map = at_inv->vector_translation = NULL;
+    }
+    int ret = 0;
+    ret = IndAffineTransform(at, at_inv, dim);
+    return ret;
 }
 
 // left mul mat * at.linear_map
