@@ -2,7 +2,7 @@
  * @Author: Weijie Li 
  * @Date: 2017-11-27 16:27:56 
  * @Last Modified by: Weijie Li
- * @Last Modified time: 2018-07-30 21:40:41
+ * @Last Modified time: 2018-11-12 22:25:09
  */
 
 
@@ -30,6 +30,9 @@ typedef mzd_t *MatGf2;
 MatGf2 GenMatGf2(int r, int c);
 
 MatGf2 GenRandomMatGf2(int r, int c);
+
+MatGf2 GenRandomMatGf2Custom(int r, int c, uint64_t (*rc)(void *data), void *data);
+
 
 MatGf2 GenIndMatrix(int size);
 
@@ -69,6 +72,8 @@ int ReAllocatedMatGf2(int r, int c, MatGf2 *mat);
 
 int ReAllocatedRandomMatGf2(int r, int c, MatGf2* mat);
 
+int ReAllocatedRandomMatGf2Custom(int r, int c, MatGf2* mat, uint64_t (*rc)(void *data), void *data);
+
 int ReAllocatedInvertibleMatGf2(int r, int c, MatGf2 *dst);
 
 /**
@@ -104,6 +109,8 @@ int MatGf2Set(MatGf2 mat, int row, int col, int value);
 int MatGf2Get(MatGf2 mat, int row, int col);
 
 int RandomMatGf2(MatGf2 mat);
+
+int RandomMatGf2Custom(MatGf2 mat, uint64_t (*rc)(void *data), void *data);
 
 void DumpMatGf2(MatGf2 mat);
 

@@ -2,13 +2,14 @@
  * @Author: Weijie Li 
  * @Date: 2017-11-27 18:59:05 
  * @Last Modified by: Weijie Li
- * @Last Modified time: 2017-12-13 23:37:32
+ * @Last Modified time: 2018-11-12 20:51:35
  */
 
 
 
 #include "matrixlib/matrix_gf2.h"
 #include "matrixlib/affine_transform.h"
+#include "matrixlib/wrandom.h"
 
 #define CSL32(x,i)					\
 	(((x) << i) | ((x) >> (32-i)))
@@ -379,6 +380,27 @@ int math_test() {
     uint32_t af_v = get32FromVec(at.vector_translation);
     printf("u32a: %u, u32b: %u, xor: %u:%u\n", u32a, u32b, u32a^u32b^af_v, u32c);
     
+    printf("------------------------------\n");
+    int random_ct = 10;
+    printf("%d random 31number:\n", random_ct);
+    int _ri = random_ct;
+    while(_ri--) {
+        printf("0x%08X\n", wRand31());
+    }
+    // printf("\n");
+    printf("%d random 32 bit number:\n", random_ct);
+    _ri = random_ct;
+    while(_ri--) {
+        printf("0x%08X\n", wRand32());
+    }
+    // printf("\n");
+    printf("%d random 64 bit number:\n", random_ct);
+    _ri = random_ct;
+    while(_ri--) {
+        printf("0x%016llX\n", wRand64());
+    }
+    // printf("\n");
+
     
 
 

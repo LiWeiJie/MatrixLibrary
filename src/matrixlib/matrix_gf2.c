@@ -2,11 +2,13 @@
  * @Author: Weijie Li 
  * @Date: 2017-11-27 16:45:31 
  * @Last Modified by: Weijie Li
- * @Last Modified time: 2018-07-30 21:41:59
+ * @Last Modified time: 2018-11-12 22:26:03
  */
 #include "matrixlib/matrix_gf2.h"
 
 #include <stdio.h>
+
+#include "matrixlib/wrandom.h"
 
 
 MatGf2 GenMatGf2(int r, int c) {
@@ -17,6 +19,12 @@ MatGf2 GenMatGf2(int r, int c) {
 MatGf2 GenRandomMatGf2(int r, int c) {
 	MatGf2 t = GenMatGf2(r, c);
 	RandomMatGf2(t);
+	return t;
+}
+
+MatGf2 GenRandomMatGf2Custom(int r, int c, uint64_t (*rc)(void *data), void *data) {
+	MatGf2 t = GenMatGf2(r, c);
+	RandomMatGf2Custom(t, rc, data);
 	return t;
 }
 
@@ -98,6 +106,12 @@ int ReAllocatedRandomMatGf2(int r, int c, MatGf2 *mat) {
 	return 0;
 }
 
+int ReAllocatedRandomMatGf2Custom(int r, int c, MatGf2* mat, uint64_t (*rc)(void *data), void *data) {
+	MatGf2Free(*mat);
+	*mat = GenRandomMatGf2Custom(r, c, rc, data);
+	return 0;
+}
+
 
 int InitMatGf2ByValueArray(int *data, MatGf2 mat) {
 	int i,j,n,m;
@@ -143,13 +157,19 @@ int MatGf2Get(MatGf2 mat, int row, int col) {
     return mzd_read_bit(mat, row, col);
 }
 
-int RandomMatGf2(MatGf2 mat) {
-    mzd_randomize(mat);
+uint64_t _wrand_word(void *data) {
+	return wRand64();
+}
+
+int RandomMatGf2Custom(MatGf2 mat, uint64_t (*rc)(void *data), void *data) {
+    mzd_randomize_custom(mat, rc, data);
     return 0;
 }
 
-
-
+int RandomMatGf2(MatGf2 mat) {
+    RandomMatGf2Custom(mat, _wrand_word, NULL);
+    return 0;
+}
 
 void DumpMatGf2Line(MatGf2 a, int newLine){
 	int i,j, n = a->nrows, m=a->ncols;
