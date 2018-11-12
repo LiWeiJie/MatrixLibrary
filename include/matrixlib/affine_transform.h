@@ -2,7 +2,7 @@
  * @Author: Weijie Li 
  * @Date: 2017-11-27 16:32:03 
  * @Last Modified by: Weijie Li
- * @Last Modified time: 2018-07-30 21:39:12
+ * @Last Modified time: 2018-11-12 22:32:46
  */
 #ifndef _MATRIX_AFFINE_TRANSFORM_H_
 #define _MATRIX_AFFINE_TRANSFORM_H_
@@ -15,7 +15,9 @@ typedef struct AffineTransform {
 } AffineTransform;
 
 int RandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim);
+int RandomAffineTransformCustom(AffineTransform *at, AffineTransform *at_inv, int dim, uint64_t (*rc)(void * data), void* data);
 int GenRandomAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim);
+int GenRandomAffineTransformCustom(AffineTransform *at, AffineTransform *at_inv, int dim, uint64_t (*rc)(void * data), void* data);
 
 int IndAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim);
 int GenIndAffineTransform(AffineTransform *at, AffineTransform *at_inv, int dim);
