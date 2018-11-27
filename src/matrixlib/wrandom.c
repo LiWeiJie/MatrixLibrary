@@ -7,12 +7,42 @@
 
 #include <matrixlib/wrandom.h>
 
-#ifdef CUSTOM_RANDOM_FUNC
+#ifdef AISINO_RAND_FUNC
+
+#include <AisinoRand/rand.h>
+
+int wRandomList(int *list, int len){
+    return aisino_rand_list(NULL, list, len);
+}
 
 uint32_t wRand31() {
-// please set the <Custom random function> in here
-
+    int tmp;
+    wRandomList(&tmp, 1);
+    return tmp;
 }
+
+uint32_t wRand32() {
+    int tmp[2];
+    wRandomList(tmp, 2);
+    uint32_t res = tmp[1] ^ (tmp[2] << 1);
+    return res;
+}
+
+uint64_t wRand64() {
+    int tmp[3];
+    wRandomList(tmp, 3);
+    uint64_t a,b,c;
+    a = tmp[0];
+    b = tmp[1];
+    c = tmp[2];
+    uint64_t res= a ^ (b<<21) ^ (c<<42) ;
+    return res;
+}
+
+#elif defined CUSTOM_RAND_FUNC
+
+// please set the <Custom random function> in here
+uint32_t wRand31()=0;
 
 #else
 
@@ -28,8 +58,6 @@ uint32_t wRand31() {
     }
     return rand();
 }
-
-#endif
 
 uint32_t wRand32() {
     uint32_t res = wRand31() ^ (wRand31() << 1);
@@ -52,7 +80,7 @@ uint64_t wRand64() {
 // static int random_rand_int_array(int *output, int count);
 
 // Rand a list of int32 (if ctx==NULL, then init a global ctx)
-int randomList(int *list, int len){
+int wRandomList(int *list, int len){
     if (list == NULL)
         return -1;
     while(len--) {
@@ -61,11 +89,11 @@ int randomList(int *list, int len){
     return 0;
 }
 
-int randomShuffleU8(uint8_t *list, int len) {
+int wRandomShuffleU8(uint8_t *list, int len) {
     int t, roundCnt, ret;
     unsigned int *randNumbers;
     randNumbers = (unsigned int *)malloc((len + 10) * sizeof(unsigned int));
-    randomList((int*) randNumbers, len);
+    wRandomList((int*) randNumbers, len);
     while (len > 0) {
         int r = randNumbers[len] % len;
         len--;
@@ -77,6 +105,7 @@ int randomShuffleU8(uint8_t *list, int len) {
     return 0;
 }
 
+#endif
 
 
 

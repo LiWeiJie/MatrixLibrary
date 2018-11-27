@@ -16,9 +16,9 @@
 // int random_rand_int_array(int *output, int count);
 
 // Rand a list of int32 (if ctx==NULL, then init a global ctx)
-int randomList(int *list, int len);
+int wRandomList(int *list, int len);
 
-int randomShuffleU8(uint8_t *list, int len);
+int wRandomShuffleU8(uint8_t *list, int len);
 
 uint32_t wRand31();
 uint32_t wRand32();
