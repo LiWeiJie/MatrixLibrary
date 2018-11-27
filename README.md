@@ -20,6 +20,19 @@ $ make install
 
 `-DBUILD_TARGET=iOS`
 
+必备软件：`cmake`、`gcc(clang)`
+
+```bash
+mkdir build
+cd build
+cmake -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DIOS_ARCH='armv7;arm64'  ..
+make
+```
+
+编译出的库在 `build/lib` 目录。
+
+
+
 ##### macOS
 
 `-DBUILD_TARGET=macOS`
