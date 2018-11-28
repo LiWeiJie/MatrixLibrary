@@ -9,7 +9,12 @@
 
 #ifdef AISINO_RAND_FUNC
 
-#include <AisinoRand/rand.h>
+#include "AisinoRand/rand.h"
+
+char* wRandFuncVersion()
+{
+    return "aisino_rand";
+}
 
 int wRandomList(int *list, int len){
     return aisino_rand_list(NULL, list, len);
@@ -24,7 +29,7 @@ uint32_t wRand31() {
 uint32_t wRand32() {
     int tmp[2];
     wRandomList(tmp, 2);
-    uint32_t res = tmp[1] ^ (tmp[2] << 1);
+    uint32_t res = tmp[0] ^ (tmp[1] << 1);
     return res;
 }
 
@@ -41,6 +46,11 @@ uint64_t wRand64() {
 
 #elif defined CUSTOM_RAND_FUNC
 
+char* wRandFuncVersion()
+{
+    return "custom random function";
+}
+
 // please set the <Custom random function> in here
 uint32_t wRand31()=0;
 
@@ -48,6 +58,11 @@ uint32_t wRand31()=0;
 
 #include<time.h> 
 #include <stdlib.h>
+
+char* wRandFuncVersion()
+{
+    return "default rand() function";
+}
 
 static int inited = 0;
 

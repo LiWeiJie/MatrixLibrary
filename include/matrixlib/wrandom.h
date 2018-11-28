@@ -15,6 +15,8 @@
 // // Rand a list of int32
 // int random_rand_int_array(int *output, int count);
 
+char* wRandFuncVersion();
+
 // Rand a list of int32 (if ctx==NULL, then init a global ctx)
 int wRandomList(int *list, int len);
 

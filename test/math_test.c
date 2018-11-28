@@ -400,8 +400,9 @@ int math_test() {
         printf("0x%016llX\n", wRand64());
     }
     // printf("\n");
+    printf("------------------------------\n");
+    printf("Random function Version: %s\n", wRandFuncVersion());
 
-    
 
 
     return 0;

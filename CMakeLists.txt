@@ -70,7 +70,7 @@ set(CMAKE_C_FLAGS_DEBUG       "-O0 -g3 -Werror -Wall")
 ########################## compile info ##########################
 
 IF(RANDOM_FUNC)
-    add_subdirectory(third-party)    
+    INCLUDE(third-party/CMakeLists.txt)
 ENDIF()
 
 LINK_DIRECTORIES(
