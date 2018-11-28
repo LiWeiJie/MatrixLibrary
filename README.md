@@ -1,46 +1,44 @@
 # MatrixLibrary
 
-## Build and install
+一个基于m4ri扩展的数学运算库，添加了伽罗瓦域gf2下的矩阵运算，仿射变换运算
 
+## Build and Install
 
+- Output: 
+  - bin: `build/bin`
+  - lib:`build/lib`
 
-Just like:
+### Build Options
 
-```
-$ cmake [params] PATH/TO/MatrixLibrary
-$ make
-$ make install
-```
+- `CMAKE_BUILD_TYPE=[Debug/Release]`
+- `BUILD_TARGET=[iOS/win32/macOS]`
+- `CMAKE_INSTALL_PREFIX=[PATH/TO/INSTALLED]`
 
-### Params
+### Build Example
 
-#### BUILD_TARGET
-
-##### iOS
-
-`-DBUILD_TARGET=iOS`
-
-必备软件：`cmake`、`gcc(clang)`
-
+#### iOS
 ```bash
 mkdir build
 cd build
-cmake -DCMAKE_TOOLCHAIN_FILE=ios.toolchain.cmake -DIOS_ARCH='armv7;arm64'  ..
+cmake -DBUILD_TARGET=iOS -DCMAKE_TOOLCHAIN_FILE=../iOS.toolchain.cmake -DIOS_ARCH='armv7;arm64'  -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
+#### macOS
+```bash
+mkdir build
+cd build
+cmake -DBUILD_TARGET=macOS  -DCMAKE_BUILD_TYPE=Release ..
+make
+```
+#### win32
+```bash
+mkdir build
+cd build
+cmake -DBUILD_TARGET=win32  -DCMAKE_BUILD_TYPE=Release ..
+make
+```
+#### Android
+```bash
+ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./MatrixLibrary.mk
+```
 
-编译出的库在 `build/lib` 目录。
-
-
-
-##### macOS
-
-`-DBUILD_TARGET=macOS`
-
-##### win32
-
-`-DBUILD_TARGET=win32`
-
-##### Android
-
-`-DDBUILD_TARGET=Android`
