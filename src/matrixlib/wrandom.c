@@ -6,6 +6,7 @@
  */
 
 #include <matrixlib/wrandom.h>
+#include <stdlib.h>
 
 #ifdef AISINO_RAND_FUNC
 
@@ -104,6 +105,8 @@ int wRandomList(int *list, int len){
     return 0;
 }
 
+#endif
+
 int wRandomShuffleU8(uint8_t *list, int len) {
     int t, roundCnt, ret;
     unsigned int *randNumbers;
@@ -119,8 +122,5 @@ int wRandomShuffleU8(uint8_t *list, int len) {
     free(randNumbers);
     return 0;
 }
-
-#endif
-
 
 
