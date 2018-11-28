@@ -11,7 +11,7 @@
 ### Build Options
 
 - `CMAKE_BUILD_TYPE=[Debug/Release]`
-- `BUILD_TARGET=[iOS/win32/macOS]`
+- `BUILD_TARGET=[iOS/win32/macOS/Unix]`
 - `CMAKE_INSTALL_PREFIX=[PATH/TO/INSTALLED]`
 
 ### Build Example
@@ -28,6 +28,13 @@ make
 mkdir build
 cd build
 cmake -DBUILD_TARGET=macOS  -DCMAKE_BUILD_TYPE=Release ..
+make
+```
+#### Unix
+```bash
+mkdir build
+cd build
+cmake -DBUILD_TARGET=Unix  -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
 #### win32

@@ -47,8 +47,10 @@ ELSEIF(BUILD_TARGET STREQUAL Android)
     message(FATAL_ERROR
     "If you want to compile, please run 'ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./MatrixLibrary.mk'."
     )
+ELSEIF(BUILD_TARGET STREQUAL Unix)
+    add_definitions(-D__unix__)
 ELSE()
-    message(FATAL_ERROR "Please set the definition BUILD_TARGET=[macOS/win32/iOS]")
+    message(FATAL_ERROR "Please set the definition BUILD_TARGET=[macOS/win32/iOS/Unix]")
 ENDIF()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
