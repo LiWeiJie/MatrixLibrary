@@ -15,14 +15,6 @@ SET(BUILD_NAME ${PROJECT_NAME})
 
 set(MATRIXLIB_VERSION_MAJOR 1)
 set(MATRIXLIB_VERSION_MINOR 0)
-configure_file(
-        "${PROJECT_SOURCE_DIR}/matrixlib_config.h.in"
-        "${PROJECT_BINARY_DIR}/matrixlib_config.h"
-)
-configure_file(
-        "${PROJECT_SOURCE_DIR}/matrixlib_config.h.in"
-        "${CMAKE_CURRENT_SOURCE_DIR}/include/matrixlib/matrixlib_config.h"
-)
 
 if (CMAKE_HOST_WIN32)
     set(WINDOWS 1)
@@ -80,6 +72,16 @@ LINK_DIRECTORIES(
 )
 
 INCLUDE_DIRECTORIES(include)
+
+configure_file(
+        "${PROJECT_SOURCE_DIR}/scripts/matrixlib_cfg.h.in"
+        "${PROJECT_BINARY_DIR}/matrixlib_cfg.h"
+)
+
+configure_file(
+        "${PROJECT_SOURCE_DIR}/scripts/matrixlib_cfg.h.in"
+        "${CMAKE_CURRENT_SOURCE_DIR}/include/matrixlib/matrixlib_cfg.h"
+)
 
 add_subdirectory(src)
 

@@ -34,3 +34,4 @@
 
 # 
 build
+include/matrixlib/matrixlib_cfg.h

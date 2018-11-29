@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <matrixlib/wrandom.h>
-#include <matrixlib/matrixlib_config.h>
+#include <matrixlib/matrixlib_cfg.h>
 
 int math_test();
 

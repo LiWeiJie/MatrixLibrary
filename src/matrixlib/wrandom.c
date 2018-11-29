@@ -7,6 +7,7 @@
 
 #include <matrixlib/wrandom.h>
 #include <stdlib.h>
+#include <matrixlib/matrixlib_cfg.h>
 
 #ifdef AISINO_RAND_FUNC
 

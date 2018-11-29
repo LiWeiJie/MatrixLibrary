@@ -41,7 +41,7 @@
     - `ENABLE_ARC`: (1|0) Enables or disables ARC support. Default 1 (true, ARC enabled by default)
     - `ENABLE_VISIBILITY`: (1|0) Enables or disables symbol visibility support. Default 0 (false, visibility hidden by default)
 - `Android`:
-    - `CMAKE_ANDROID_ARCH_ABI=(arm64-v8a armeabi-v7a armeabi-v6 armeabi mips mips64 x86 x86_64)`
+    - `ANDROID_ABI=(arm64-v8a armeabi-v7a armeabi-v6 armeabi mips mips64 x86 x86_64)`
 
 ### Build Example
 

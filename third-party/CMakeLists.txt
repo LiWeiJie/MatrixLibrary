@@ -6,14 +6,15 @@ PROJECT(MatrixLib)
 
 # add_subdirectory(third-party)    
 IF (RANDOM_FUNC STREQUAL aisino)
-    add_definitions(-DAISINO_RAND_FUNC)
+    SET(AISINO_RAND_FUNC ON)
+    
     SET(MATRIXLIB_LINK aisino_rand)
     
     INCLUDE_DIRECTORIES(third-party/aisino_rand/header)
     INCLUDE_DIRECTORIES(third-party/aisino_rand/include)
     add_subdirectory(third-party/aisino_rand)
 ELSEIF(RANDOM_FUNC STREQUAL custom)
-    add_definitions(-DCUSTOM_RAND_FUNC)
+    SET(CUSTOM_RAND_FUNC ON)
 ELSE()
-    message(WARNING "not defined RANDOM_FUNC: [${RANDOM_FUNC}], continue with the default rand() function")
+    message(WARNING "Not defined RANDOM_FUNC: [${RANDOM_FUNC}], continue with the default rand() function")
 ENDIF()
