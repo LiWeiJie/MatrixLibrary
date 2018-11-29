@@ -1,6 +1,6 @@
 ﻿# 0. Options for Compiler
 option(ML_TEST "test" ON)
-option(RANDOM_FUNC OFF)
+option(RANDOM_FUNC default)
 
 # 1. Set cmake version
 cmake_minimum_required(VERSION 3.2)
@@ -71,7 +71,7 @@ set(CMAKE_C_FLAGS_DEBUG       "-O0 -g3 -Werror -Wall")
 
 ########################## compile info ##########################
 
-IF(RANDOM_FUNC)
+IF(NOT RANDOM_FUNC STREQUAL default)
     INCLUDE(third-party/CMakeLists.txt)
 ENDIF()
 
