@@ -36,6 +36,7 @@ ELSEIF(BUILD_TARGET STREQUAL iOS)
     ENDIF()
 ELSEIF(BUILD_TARGET STREQUAL Android)
     add_definitions(-D__ANDROID__)
+    add_definitions(-DANDROID_M4RI)
     message(FATAL_ERROR
     "If you want to compile, please run 'ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./MatrixLibrary.mk'."
     )
@@ -72,11 +73,6 @@ LINK_DIRECTORIES(
 )
 
 INCLUDE_DIRECTORIES(include)
-
-configure_file(
-        "${PROJECT_SOURCE_DIR}/scripts/matrixlib_cfg.h.in"
-        "${PROJECT_BINARY_DIR}/matrixlib_cfg.h"
-)
 
 configure_file(
         "${PROJECT_SOURCE_DIR}/scripts/matrixlib_cfg.h.in"

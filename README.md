@@ -77,7 +77,7 @@ make
 ```bash
 mkdir build
 cd build
-cmake -DBUILD_TARGET=Android -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${NDK_ROOT}/build/cmake/android.toolchain.cmake ..
+cmake -DBUILD_TARGET=Android -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${NDK_ROOT}/build/cmake/android.toolchain.cmake -DANDROID_ABI='arm64-v8a' ..
 make
 ```
 Or
