@@ -36,10 +36,10 @@ ELSEIF(BUILD_TARGET STREQUAL iOS)
     ENDIF()
 ELSEIF(BUILD_TARGET STREQUAL Android)
     add_definitions(-D__ANDROID__)
-    add_definitions(-DANDROID_M4RI)
-    message(FATAL_ERROR
-    "If you want to compile, please run 'ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./MatrixLibrary.mk'."
-    )
+    SET(MATRIXLIB_LINK ${MATRIXLIB_LINK} android log)
+    # message(FATAL_ERROR
+    # "If you want to compile, please run 'ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./MatrixLibrary.mk'."
+    # )
 ELSEIF(BUILD_TARGET STREQUAL Unix)
     add_definitions(-D__unix__)
 ELSE()
