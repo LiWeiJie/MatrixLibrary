@@ -49,7 +49,7 @@
 ```bash
 mkdir build
 cd build
-cmake -DBUILD_TARGET=iOS -DCMAKE_TOOLCHAIN_FILE=../iOS.toolchain.cmake -DIOS_ARCH='armv7;arm64'  -DCMAKE_BUILD_TYPE=Release ..
+cmake -DBUILD_TARGET=iOS -DCMAKE_TOOLCHAIN_FILE=../ios.toolchain.cmake -DIOS_ARCH='armv7;arm64'  -DCMAKE_BUILD_TYPE=Release ..
 make
 ```
 #### macOS
@@ -79,9 +79,5 @@ mkdir build
 cd build
 cmake -DBUILD_TARGET=Android -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=${NDK_ROOT}/build/cmake/android.toolchain.cmake -DANDROID_ABI='arm64-v8a' ..
 make
-```
-Or
-```bash
-ndk-build NDK_PROJECT_PATH=./ NDK_APPLICATION_MK=./MatrixLibrary.mk
 ```
 
